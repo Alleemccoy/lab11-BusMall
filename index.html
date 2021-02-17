@@ -13,14 +13,33 @@
   </header>
   <main>
     <h3>Click on Your Favorite Product</h3>
+
+    <!-- Need to randomly dynamically generate src attribute for each image -->
     <section>
-      <img>
-      <img>
+      <div class="imageContainer">
+        <img id="randomImage1" src="" alt="">
+      </div>
+      <div class="imageContainer">
+        <img id="randomImage2" src="" alt="">
+      </div>
+      <div class="imageContainer">
+        <img id="randomImage3" src="" alt="">
+      </div>
     </section>
-    <div>View Results</div>
-    <ul></ul>
+
+    <div>
+      <!-- Need to attach an event listener to the button that will display the result list by removing the "hidden" attribute -->
+      <button id="viewResults">
+        View Results
+      </button>
+
+      <!-- TODO: Need to dynamically generate li's with picture click data -->
+      <ul id="resultList" hidden>
+      
+      </ul>
+    </div>
   </main>
-  <script  src="js/app.js"></script>
+  <script src="js/app.js"></script>
 </body>
 
 </html>
