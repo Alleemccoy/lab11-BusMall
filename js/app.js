@@ -54,10 +54,8 @@ function renderProducts() {
         console.log('hit');
         indexArray.push(randomIndex);
       }
-
     }
   }
-
 
   previousImages[0] = indexArray[0];
   previousImages[1] = indexArray[1];
@@ -91,6 +89,7 @@ function renderVoteResults() {
 function clickOnPage(event) {
   if (event.target === section) {
     alert('Please click on an image');
+    return;
   }
   timesClicked++;
   let clickItem = event.target.title;
@@ -102,14 +101,59 @@ function clickOnPage(event) {
   renderProducts();
   if (timesClicked === allowedClicks) {
     section.removeEventListener('click', clickOnPage);
+    buttonResults.addEventListener('click', renderVoteResults);
+    renderChart();
   }
 }
-function clickButton(event) {
-  if (timesClicked === allowedClicks) {
-    renderVoteResults();
+
+
+function renderChart() {
+  let productNames = [];
+  let productViews = [];
+  let productClicks = [];
+  for (let i = 0; i < allProducts.length; i++) {
+    productNames.push(allProducts[i].name);
+    productViews.push(allProducts[i].numberOfViews);
+    productClicks.push(allProducts[i].numberOfClicks);
   }
+  console.log('productNames: ', productNames);
+  console.log('productViews', productViews);
+  console.log('productClicks', productClicks);
+  var chartObject = {
+    type: 'line',
+    data: {
+      labels: productNames,
+      datasets: [{
+        label: 'Views',
+        data: productViews,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 3
+      },
+      {
+        label: 'Clicks',
+        data: productClicks,
+        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+        borderColor: 'rgba(153, 102, 255, 1)',
+        borderWidth: 3
+      }]
+    },
+    responsive: false,
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  };
+  
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let myChart = new Chart(ctx, chartObject);
 }
+
 renderProducts();
 
 section.addEventListener('click', clickOnPage);
-buttonResults.addEventListener('click', renderVoteResults);
