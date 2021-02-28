@@ -10,7 +10,7 @@ let buttonResults = document.getElementById('viewResults');
 let timesClicked = 0;
 let allowedClicks = 25;
 let uniqueImageCount = 3;
-
+// defining what this is referring to
 function Product(name, fileExtension = 'jpg') {
   this.name = name;
   this.src = `images/${name}.${fileExtension}`;
@@ -19,7 +19,7 @@ function Product(name, fileExtension = 'jpg') {
   allProducts.push(this);
 }
 
-
+// local storage
 let retrievedProducts = localStorage.getItem('products');
 console.log(retrievedProducts);
 
@@ -29,7 +29,7 @@ if (retrievedProducts) {
 
   allProducts = parsedProducts;
 } else {
-
+  // creating new products and naming them
   new Product('bag');
   new Product('banana');
   new Product('bathroom');
@@ -51,12 +51,12 @@ if (retrievedProducts) {
   new Product('water-can');
   new Product('wine-glass');
 }
-
+// random image generator
 function getRandomProduct() {
   return Math.floor(Math.random() * allProducts.length);
 }
 
-
+// this is ensuring that the 3 images shown are not matching any of the previous 3 images that were just shown
 function renderProducts() {
   let indexArray = [];
   while (indexArray.length < uniqueImageCount) {
@@ -68,11 +68,11 @@ function renderProducts() {
       }
     }
   }
-
+  // creating 3 places for images
   previousImages[0] = indexArray[0];
   previousImages[1] = indexArray[1];
   previousImages[2] = indexArray[2];
-
+  // updating the images with the right source and name and updating the view counts
   productOne.src = allProducts[indexArray[0]].src;
   productOne.title = allProducts[indexArray[0]].name;
   allProducts[indexArray[0]].numberOfViews++;
@@ -87,8 +87,7 @@ function renderProducts() {
 
 }
 
-// create render function
-
+// here is where I display all the vote totals for each product
 function renderVoteResults() {
   let clicks = document.querySelector('ul');
   for (let i = 0; i < allProducts.length; i++) {
@@ -99,10 +98,12 @@ function renderVoteResults() {
 }
 
 function clickOnPage(event) {
+  // created alert that is activated when user clicks on something other than one of the photos
   if (event.target === section) {
     alert('Please click on an image');
     return;
   }
+  // total number of clicks on any photo
   timesClicked++;
   let clickItem = event.target.title;
   for (let i = 0; i < allProducts.length; i++) {
@@ -111,6 +112,7 @@ function clickOnPage(event) {
     }
   }
   renderProducts();
+  // Once total number of clicks is 25 stop new pictures from populating and show bar chart
   if (timesClicked === allowedClicks) {
     section.removeEventListener('click', clickOnPage);
     buttonResults.addEventListener('click', renderVoteResults);
@@ -120,7 +122,7 @@ function clickOnPage(event) {
   }
 }
 
-
+// creating the bar chart here
 function renderChart() {
   let productNames = [];
   let productViews = [];
@@ -165,7 +167,7 @@ function renderChart() {
   };
 
   let ctx = document.getElementById('myChart').getContext('2d');
-  let myChart = new Chart(ctx, chartObject);
+  new Chart(ctx, chartObject);
 }
 
 renderProducts();
