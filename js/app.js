@@ -134,7 +134,7 @@ function renderChart() {
   console.log('productViews', productViews);
   console.log('productClicks', productClicks);
   var chartObject = {
-    type: 'line',
+    type: 'bar',
     data: {
       labels: productNames,
       datasets: [{
